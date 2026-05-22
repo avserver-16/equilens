@@ -1,0 +1,63 @@
+# Python cache
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Virtual environments
+venv/
+env/
+ENV/
+.venv/
+
+# Environment variables
+.env
+.env.*
+
+# VS Code
+.vscode/
+
+# PyCharm
+.idea/
+
+# Jupyter
+.ipynb_checkpoints/
+
+# SQLite databases
+*.db
+*.sqlite3
+
+# Logs
+*.log
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Build / distribution
+build/
+dist/
+*.egg-info/
+
+# Data files (optional)
+# Uncomment if you don't want datasets committed
+# data/*.csv
+
+# Keep universe.csv tracked if needed
+# !data/universe.csv
+
+# Temporary files
+*.tmp
+*.temp
+
+# Coverage / testing
+.coverage
+pytest_cache/
+
+# MyPy
+.mypy_cache/
+
+# Ruff
+.ruff_cache/
+
+# Node modules (if frontend added later)
+node_modules/
