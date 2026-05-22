@@ -1,0 +1,18 @@
+{
+  "universe": {
+    "source": "sp500",
+    "path": "data/universe.csv",
+    "min_market_cap_B": 2,
+    "exclude_sectors": [],
+    "refresh_days": 7
+  },
+  "factors": {
+    "valuation_weight": 0.35,
+    "quality_weight": 0.35,
+    "momentum_weight": 0.30
+  },
+  "output": {
+    "top_n": 20,
+    "memo_dir": "output/memos"
+  }
+}
