@@ -8,11 +8,22 @@
   },
   "factors": {
     "valuation_weight": 0.35,
-    "quality_weight": 0.35,
-    "momentum_weight": 0.30
+    "quality_weight":   0.35,
+    "momentum_weight":  0.30
+  },
+  "scorer": {
+    "watchlist_size":       20,
+    "max_per_sector":        3,
+    "min_sectors_covered":   6,
+    "tier_a_percentile":  0.05,
+    "tier_b_percentile":  0.15,
+    "tier_c_percentile":  0.25,
+    "min_pillars_positive":  2
   },
   "output": {
-    "top_n": 20,
-    "memo_dir": "output/memos"
+    "top_n":     20,
+    "memo_dir":  "output/memos",
+    "scores_csv":"data/scores.csv",
+    "watchlist_csv": "data/watchlist.csv"
   }
 }
