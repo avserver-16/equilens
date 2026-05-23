@@ -7,9 +7,9 @@
     "refresh_days": 7
   },
   "factors": {
-    "valuation_weight": 0.35,
-    "quality_weight": 0.35,
-    "momentum_weight": 0.30
+    "valuation_weight": 0.20,
+    "quality_weight":   0.55,
+    "momentum_weight":  0.25
   },
   "output": {
     "top_n": 20,
