@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>MU — EquiLens Memo</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=EB+Garamond:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap');
+  :root {
+    --navy:   #1A3A5C;
+    --teal:   #0F6E56;
+    --amber:  #BA7517;
+    --red:    #993C1D;
+    --gray:   #555555;
+    --light:  #F7F6F2;
+    --border: #D6D3CA;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'EB Garamond', Georgia, serif; font-size: 11.5pt;
+         color: #1A1A1A; background: #fff; max-width: 820px;
+         margin: 0 auto; padding: 36px 48px; line-height: 1.5; }
+  /* Header */
+  .header { border-bottom: 2px solid var(--navy); padding-bottom: 14px; margin-bottom: 18px; }
+  .header-top { display: flex; justify-content: space-between; align-items: flex-start; }
+  .ticker { font-size: 28pt; font-weight: 600; color: var(--navy); letter-spacing: -0.5px; }
+  .company { font-size: 12pt; color: var(--gray); margin-top: 2px; }
+  .meta-right { text-align: right; }
+  .rank-badge { font-family: 'JetBrains Mono', monospace; font-size: 10pt;
+                background: var(--navy); color: #fff;
+                padding: 3px 10px; border-radius: 3px; display: inline-block; }
+  .tier-badge { font-family: 'JetBrains Mono', monospace; font-size: 10pt;
+                padding: 3px 10px; border-radius: 3px; display: inline-block; margin-left: 6px; }
+  .tier-A { background: #E1F5EE; color: #085041; }
+  .tier-B { background: #E6F1FB; color: #0C447C; }
+  .tier-C { background: #FDF6EC; color: #633806; }
+  .confidence { font-size: 10pt; color: var(--gray); margin-top: 6px; }
+  /* Divergence banner */
+  .div-banner { padding: 10px 14px; border-radius: 4px; margin-bottom: 16px;
+                font-size: 10.5pt; line-height: 1.5; }
+  .div-CONFIRMED_BUY       { background: #E1F5EE; border-left: 4px solid #0F6E56; color: #085041; }
+  .div-SENTIMENT_RISK      { background: #FAEEDA; border-left: 4px solid #BA7517; color: #633806; }
+  .div-MOMENTUM_TRAP       { background: #FCEBEB; border-left: 4px solid #993C1D; color: #501313; }
+  .div-HIDDEN_GEM          { background: #E6F1FB; border-left: 4px solid #1A3A5C; color: #0C447C; }
+  .div-MOMENTUM_RECOVERY   { background: #EDF7F2; border-left: 4px solid #1D9E75; color: #085041; }
+  .div-ALIGNED             { background: #F7F6F2; border-left: 4px solid #9A9A95; color: #444; }
+  .div-banner strong { font-weight: 600; }
+  /* Section headers */
+  h2 { font-size: 9pt; font-weight: 600; text-transform: uppercase;
+       letter-spacing: 0.1em; color: var(--navy); margin: 18px 0 8px;
+       border-bottom: 1px solid var(--border); padding-bottom: 4px; }
+  /* Factor table */
+  table { width: 100%; border-collapse: collapse; font-size: 10.5pt; }
+  th { text-align: left; font-weight: 600; color: var(--navy);
+       padding: 5px 8px; border-bottom: 1.5px solid var(--navy);
+       font-size: 9pt; text-transform: uppercase; letter-spacing: 0.05em; }
+  td { padding: 5px 8px; border-bottom: 1px solid var(--border); }
+  tr:last-child td { border-bottom: none; }
+  .val-pos { color: var(--teal); font-weight: 500; }
+  .val-neg { color: var(--red);  font-weight: 500; }
+  .val-neu { color: var(--gray); }
+  .mono    { font-family: 'JetBrains Mono', monospace; font-size: 10pt; }
+  /* Sentiment row */
+  .sent-grid { display: grid; grid-template-columns: 1fr 1fr 1fr 1fr; gap: 12px; margin: 8px 0; }
+  .sent-cell { background: var(--light); padding: 8px 12px; border-radius: 4px; }
+  .sent-val  { font-size: 14pt; font-weight: 600; font-family: 'JetBrains Mono', monospace; }
+  .sent-lbl  { font-size: 8.5pt; color: var(--gray); margin-top: 2px; text-transform: uppercase; letter-spacing: 0.05em; }
+  /* Thesis */
+  .thesis { background: var(--light); padding: 12px 16px; border-radius: 4px;
+            font-size: 10.5pt; line-height: 1.65; color: #1A1A1A; }
+  /* Risk flags */
+  .flag { display: inline-block; font-size: 9.5pt; padding: 2px 8px;
+          border-radius: 3px; margin: 2px 4px 2px 0; }
+  .flag-warn { background: #FAEEDA; color: #633806; }
+  .flag-ok   { background: #E1F5EE; color: #085041; }
+  .flag-info { background: #E6F1FB; color: #0C447C; }
+  /* Footer */
+  .footer { margin-top: 28px; border-top: 1px solid var(--border);
+            padding-top: 10px; font-size: 9pt; color: var(--gray);
+            display: flex; justify-content: space-between; }
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<div class="header">
+  <div class="header-top">
+    <div>
+      <div class="ticker">MU</div>
+      <div class="company">MU &nbsp;·&nbsp; Information Technology &nbsp;·&nbsp; Semiconductors</div>
+    </div>
+    <div class="meta-right">
+      <span class="rank-badge">Rank #8</span>
+      <span class="tier-badge tier-A">Tier A</span>
+      <div class="confidence">Confidence: 69/100</div>
+    </div>
+  </div>
+</div>
+
+<!-- DIVERGENCE BANNER -->
+<div class="div-banner div-ALIGNED">
+  <strong>— Aligned — No Significant Divergence</strong> — No significant divergence. Signals are broadly consistent.
+</div>
+
+<!-- INVESTMENT THESIS -->
+<h2>Investment Thesis</h2>
+<div class="thesis">MU ranks #8 in the S&P 500 universe with a composite score of +1.15, reflecting broadly consistent signals across valuation (z=+0.43), quality (z=+0.53), and momentum (z=+2.71) factors. Operating in the Information Technology sector with a P/E of 35.4x and ROIC of 29.0%, the risk/reward is consistent with the model's conviction level.</div>
+
+<!-- FACTOR SCORES -->
+<h2>Factor Breakdown</h2>
+<table>
+  <tr><th>Pillar</th><th>Z-Score</th><th>Key Metrics</th><th>Signal</th></tr>
+  <tr>
+    <td>Valuation</td>
+    <td class="mono val-pos">+0.43</td>
+    <td class="mono">P/E 35.4 · EV/EBITDA 23.2 · P/B 11.69</td>
+    <td>— Fairly valued</td>
+  </tr>
+  <tr>
+    <td>Quality</td>
+    <td class="mono val-pos">+0.53</td>
+    <td class="mono">ROIC 29.0% · GM 58.4% · D/E 14.9</td>
+    <td>✓ High quality</td>
+  </tr>
+  <tr>
+    <td>Momentum</td>
+    <td class="mono val-pos">+2.71</td>
+    <td class="mono">1M 55.9% · 3M 78.5% · 6M 235.6%</td>
+    <td>✓ Positive</td>
+  </tr>
+  <tr style="border-top: 1.5px solid var(--navy);">
+    <td><strong>Composite</strong></td>
+    <td class="mono val-pos"><strong>+1.15</strong></td>
+    <td class="mono">Mkt cap $846.9B</td>
+    <td><strong>Universe rank #8 / 503</strong></td>
+  </tr>
+</table>
+
+<!-- SENTIMENT -->
+<h2>Management Sentiment (SEC EDGAR Transcripts)</h2>
+<div class="sent-grid">
+  <div class="sent-cell">
+    <div class="sent-val val-pos">0.169</div>
+    <div class="sent-lbl">Latest tone score</div>
+  </div>
+  <div class="sent-cell">
+    <div class="sent-val val-neu">N/A</div>
+    <div class="sent-lbl">QoQ delta</div>
+  </div>
+  <div class="sent-cell">
+    <div class="sent-val val-neu">Stable</div>
+    <div class="sent-lbl">Tone trend</div>
+  </div>
+  <div class="sent-cell">
+    <div class="sent-val val-neu">NEUTRAL</div>
+    <div class="sent-lbl">Sentiment flag</div>
+  </div>
+</div>
+
+<!-- RISK FLAGS -->
+<h2>Risk Flags</h2>
+<div>
+  
+    <span class="flag flag-ok">Low leverage D/E 14.9x</span>
+  
+    <span class="flag flag-ok">Strong revenue growth 196%</span>
+  
+    <span class="flag flag-ok">Tier A — top 5% universe</span>
+  
+</div>
+
+<!-- FOOTER -->
+<div class="footer">
+  <span>EquiLens — Quantitative Equity Research Engine</span>
+  <span>Generated May 24, 2026 · Data: yfinance + SEC EDGAR</span>
+</div>
+
+</body>
+</html>
